@@ -3,6 +3,7 @@ package handlers
 import (
 	playerdomain "ctcwebservice/core/player/domain"
 	playerports "ctcwebservice/core/player/ports"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
@@ -20,12 +21,10 @@ func (h *PlayerHandler) Register(c *gin.Context) {
 	var player playerdomain.Player
 	c.BindJSON(&player)
 
-	err := h.playerService.Register(&player)
+	playerId, err := h.playerService.Register(&player)
 	if err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
 	}
-
-	if err == nil {
-		c.JSON(200, gin.H{"message": "Hello wordl!"})
-	}
+	c.JSON(http.StatusOK, gin.H{"data": gin.H{"player_id": playerId}, "message": "Registrado correctamente"})
 }

@@ -7,11 +7,11 @@ import (
 )
 
 type PlayerRepository interface {
-	Create(player *playerdomain.Player) error
+	Create(player *playerdomain.Player) (uint, error)
 }
 
 type PlayerService interface {
-	Register(player *playerdomain.Player) error
+	Register(player *playerdomain.Player) (uint, error)
 }
 
 type PlayerHandler interface {

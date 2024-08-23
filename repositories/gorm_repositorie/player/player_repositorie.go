@@ -22,19 +22,23 @@ func (r *PlayerRepository) GetPlayerByEmail(email string) (playerdomain.Player, 
 	return playerdomain.Player{}, nil
 }
 
-func (r *PlayerRepository) Create(player *playerdomain.Player) error {
+func (r *PlayerRepository) Create(player *playerdomain.Player) (uint, error) {
 
 	var result *gorm.DB
 	result = r.db.Create(player)
 
 	if errors.Is(result.Error, gorm.ErrDuplicatedKey) {
-		result = r.db.First(player, "email = ?", player.Email)
+		result = r.db.First(player, "email = ? and phone_number = ? ", player.Email, player.PhoneNumber)
 
 		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
-			return repositories.ErrDuplicatedKeyPhoneNumber
+			result = r.db.First(player, "email = ?", player.Email)
+			if errors.Is(result.Error, gorm.ErrRecordNotFound) {
+				return 0, repositories.ErrDuplicatedKeyPhoneNumber
+			}
+			return 0, repositories.ErrDuplicatedKeyEmail
 		}
 
-		return repositories.ErrDuplicatedKeyEmail
+		return 0, repositories.ErrDuplicatedKeyEmailPhoneNumber
 	}
-	return nil
+	return player.PlayerID, nil
 }

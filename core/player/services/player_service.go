@@ -15,13 +15,18 @@ func NewPlayerService(playerRepository playerports.PlayerRepository) *PlayerServ
 	}
 }
 
-func (s *PlayerService) Register(player *playerdomain.Player) error {
+func (s *PlayerService) Register(player *playerdomain.Player) (uint, error) {
 	var err error
 
 	err = player.HashPassword()
 	if err != nil {
-		return err
+		return 0, err
 	}
-	err = s.playerRepository.Create(player)
-	return err
+	playerId, err := s.playerRepository.Create(player)
+
+	if err != nil {
+		return 0, err
+	}
+
+	return playerId, nil
 }

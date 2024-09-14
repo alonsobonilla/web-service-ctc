@@ -8,9 +8,14 @@ import (
 	authgorm "ctcwebservice/repositories/gorm_repositorie/auth"
 	playergorm "ctcwebservice/repositories/gorm_repositorie/player"
 	"ctcwebservice/server"
+	"ctcwebservice/utils"
+
+	"github.com/gin-gonic/gin/binding"
 )
 
 func main() {
+	binding.Validator = new(utils.Validator)
+
 	playerRepository := playergorm.NewPlayerRepository(gormrepositorie.Db)
 	playerService := playerservice.NewPlayerService(playerRepository)
 	playerHandler := handlers.NewPlayerHandler(playerService)

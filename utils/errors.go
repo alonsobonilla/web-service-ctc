@@ -18,6 +18,12 @@ var mapped = map[string]func(validator.FieldError) string{
 	"len": func(fe validator.FieldError) string {
 		return fmt.Sprintf("El campo %s no cumple con la longitud de %s", fe.Field(), fe.Param())
 	},
+	"number": func(fe validator.FieldError) string {
+		return fmt.Sprintf("El campo %s no es un número válido", fe.Field())
+	},
+	"min": func(fe validator.FieldError) string {
+		return fmt.Sprintf("El campo %s no cumple con la longitud mínima de %s", fe.Field(), fe.Param())
+	},
 }
 
 type validationErrorsCustom struct {

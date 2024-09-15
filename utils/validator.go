@@ -14,7 +14,7 @@ type Validator struct {
 func (v *Validator) ValidateStruct(obj any) error {
 	v.lazyinit()
 	if err := v.validate.Struct(obj); err != nil {
-		return NewCustomErrors(err)
+		return NewValidationErrorsCustom(err)
 	}
 	return nil
 }

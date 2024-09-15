@@ -20,18 +20,17 @@ var mapped = map[string]func(validator.FieldError) string{
 	},
 }
 
-type customErrors struct {
-	fieldErrors validator.ValidationErrors
+type validationErrorsCustom struct {
 }
 
-func NewCustomErrors(err error) customErrors {
+func NewValidationErrorsCustom(err error) validationErrorsCustom {
 	if validationErrors, ok := err.(validator.ValidationErrors); ok {
-		return customErrors{fieldErrors: validationErrors}
+		return validationErrorsCustom{fieldErrors: validationErrors}
 	}
-	return customErrors{}
+	return validationErrorsCustom{}
 }
 
-func (c customErrors) Error() string {
+func (c validationErrorsCustom) Error() string {
 	buff := bytes.NewBufferString("")
 
 	max := len(c.fieldErrors)

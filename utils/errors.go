@@ -3,7 +3,6 @@ package utils
 import (
 	"bytes"
 	"fmt"
-	"strings"
 
 	"github.com/go-playground/validator/v10"
 )
@@ -45,7 +44,7 @@ func (c validationErrorsCustom) Error() string {
 		buff.WriteString(";")
 	}
 	buff.WriteString(messageBuild(c.fieldErrors[max-1]))
-	return strings.TrimSpace(buff.String())
+	return buff.String()
 }
 
 func messageBuild(fe validator.FieldError) string {

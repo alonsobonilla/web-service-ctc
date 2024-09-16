@@ -14,7 +14,7 @@ import (
 )
 
 func main() {
-	binding.Validator = new(utils.Validator)
+	binding.Validator = new(utils.CustomValidator)
 
 	playerRepository := playergorm.NewPlayerRepository(gormrepositorie.Db)
 	playerService := playerservice.NewPlayerService(playerRepository)

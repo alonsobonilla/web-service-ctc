@@ -11,11 +11,11 @@ type Player struct {
 	PlayerID     uint   `gorm:"primaryKey"`
 	FirstName    string `gorm:"type:varchar(100);not null" json:"first_name" binding:"required"`
 	LastName     string `gorm:"type:varchar(100);not null" json:"last_name" binding:"required"`
-	Password     string `gorm:"type:varchar(255);not null" json:"password" binding:"required"`
-	PhoneNumber  string `gorm:"type:char(9);unique;not null" json:"phone_number" binding:"required,len=9"`
+	Password     string `gorm:"type:varchar(255);not null" json:"password" binding:"required,min=8"`
+	PhoneNumber  string `gorm:"type:char(9);unique;not null" json:"phone_number" binding:"required,number,len=9"`
 	Email        string `gorm:"type:varchar(255);unique;not null" json:"email" binding:"required,email"`
-	Gender       string `gorm:"type:char(1);not null;" json:"gender" binding:"required"`
-	BirthDate    string `gorm:"type:date" json:"birth_date" binding:"required"`
+	Gender       string `gorm:"type:char(1);not null;" json:"gender" binding:"required,len=1"`
+	BirthDate    string `gorm:"type:date" json:"birth_date" binding:"required,datetime=2006-01-02"`
 	PlayerImage  string `json:"player_image"`
 	CreatedAt    time.Time
 	UpdatedAt    time.Time

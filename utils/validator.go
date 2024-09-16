@@ -6,25 +6,24 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
-type Validator struct {
+type CustomValidator struct {
 	once     sync.Once
 	validate *validator.Validate
 }
 
-func (v *Validator) ValidateStruct(obj any) error {
+func (v *CustomValidator) ValidateStruct(obj any) error {
+func (v *CustomValidator) validateStruct(obj any) error {
 	v.lazyinit()
-	if err := v.validate.Struct(obj); err != nil {
-		return NewValidationErrorsCustom(err)
 	}
 	return nil
 }
 
-func (v *Validator) Engine() any {
+func (v *CustomValidator) Engine() any {
 	v.lazyinit()
 	return v.validate
 }
 
-func (v *Validator) lazyinit() {
+func (v *CustomValidator) lazyinit() {
 	v.once.Do(func() {
 		v.validate = validator.New()
 		v.validate.SetTagName("binding")

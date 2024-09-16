@@ -26,13 +26,11 @@ var mapped = map[string]func(validator.FieldError) string{
 }
 
 type validationErrorsCustom struct {
+	fieldErrors validator.ValidationErrors
 }
 
-func NewValidationErrorsCustom(err error) validationErrorsCustom {
-	if validationErrors, ok := err.(validator.ValidationErrors); ok {
-		return validationErrorsCustom{fieldErrors: validationErrors}
-	}
-	return validationErrorsCustom{}
+func NewValidationErrorsCustom(err validator.ValidationErrors) validationErrorsCustom {
+	return validationErrorsCustom{fieldErrors: err}
 }
 
 func (c validationErrorsCustom) Error() string {

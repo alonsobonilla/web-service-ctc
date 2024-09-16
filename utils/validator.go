@@ -14,6 +14,8 @@ type CustomValidator struct {
 func (v *CustomValidator) ValidateStruct(obj any) error {
 func (v *CustomValidator) validateStruct(obj any) error {
 	v.lazyinit()
+	if errors, ok := v.validate.Struct(obj).(validator.ValidationErrors); ok {
+		return NewValidationErrorsCustom(errors)
 	}
 	return nil
 }

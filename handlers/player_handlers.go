@@ -27,7 +27,7 @@ func (h *PlayerHandler) Register(c *gin.Context) {
 
 	playerId, err := h.playerService.Register(&player)
 	if err != nil {
-		c.JSON(handlers.Mapped[err], gin.H{"data": nil, "error": err.Error()})
+		c.JSON(handlers.Mapped[err], gin.H{"data": nil, "error_type": err.Error()})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"data": gin.H{"player_id": playerId}, "message": "Registrado correctamente"})

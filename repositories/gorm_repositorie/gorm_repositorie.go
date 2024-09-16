@@ -2,8 +2,8 @@ package gormrepositorie
 
 import (
 	playerdomain "ctcwebservice/core/player/domain"
-	playersportdomain "ctcwebservice/core/player_sport/domain"
 	sportdomain "ctcwebservice/core/sport/domain"
+	subscriptiondomain "ctcwebservice/core/subscription/domain"
 	"fmt"
 	"os"
 
@@ -29,8 +29,8 @@ func init() {
 
 	db, _ := gorm.Open(postgres.Open(dns), &gorm.Config{TranslateError: true})
 
-	db.SetupJoinTable(&playerdomain.Player{}, "PlayerSports", &playersportdomain.PlayerSport{})
-	db.AutoMigrate(&playerdomain.Player{}, &sportdomain.Sport{}, &playersportdomain.PlayerSport{})
+	db.SetupJoinTable(&playerdomain.Player{}, "PlayerSubscriptions", &subscriptiondomain.Subscription{})
+	db.AutoMigrate(&playerdomain.Player{}, &sportdomain.Sport{}, &subscriptiondomain.Subscription{})
 
 	Db = db
 }

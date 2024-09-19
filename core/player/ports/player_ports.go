@@ -7,13 +7,13 @@ import (
 )
 
 type PlayerRepository interface {
-	Create(player *playerdomain.Player) (uint, error)
+	Create(*playerdomain.Player) (uint, error)
 }
 
 type PlayerService interface {
-	Register(player *playerdomain.Player) (uint, error)
+	Register(*playerdomain.Player) (uint, error)
 }
 
 type PlayerHandler interface {
-	Register(c *gin.Context)
+	Register(*gin.Context)
 }
